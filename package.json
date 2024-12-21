@@ -1,0 +1,23 @@
+{
+  "name": "secure-file-sharing",
+  "version": "1.0.0",
+  "description": "Secure File Sharing (SFS) is a open source and secure file sharing solution.",
+  "scripts": {
+    "start": "make run",
+    "build": "make build",
+    "dev": "nodemon"
+  },
+  "keywords": [
+    "ecure",
+    "file-sharing",
+    "open-source",
+    "encryption",
+    "sfs",
+    "secure-file-sharing"
+  ],
+  "author": "BumblebeeCode",
+  "license": "SEE LICENSE IN LICENSE",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
