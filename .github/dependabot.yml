@@ -1,12 +1,14 @@
 version: 2
 
+# Update configuration for Go modules (gomod)
 updates:
-  - package-ecosystem: "gomod"
-    directory: "/"
+  - package-ecosystem: "gomod"  # Specify Go modules as the ecosystem to track
+    directory: "/"  # The directory where the go.mod file is located (root in this case)
     schedule:
-      interval: "daily"
+      interval: "daily"  # Check for updates to Go dependencies daily
 
-  - package-ecosystem: "npm"
-    directory: "/"
+  # Update configuration for npm (Node.js) packages
+  - package-ecosystem: "npm"  # Specify npm as the ecosystem to track
+    directory: "/"  # The directory where the package.json file is located (root in this case)
     schedule:
-      interval: "daily"
+      interval: "daily"  # Check for updates to npm dependencies daily
