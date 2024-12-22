@@ -1,4 +1,4 @@
-name: Silvester Workflow
+name: Year-End Workflow
 
 on:
   schedule:
@@ -24,9 +24,9 @@ jobs:
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
+        
         git add .
 
         git commit -m "Happy New Year 🎉"
-        
+
         git push origin HEAD
