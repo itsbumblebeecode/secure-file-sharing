@@ -5,6 +5,7 @@ import (
 	"net/http"      // Provides HTTP client and server implementations
 	"net/url"       // Used for URL manipulation
 	"path/filepath" // For working with file paths
+	"time"
 
 	"github.com/gin-gonic/gin" // Gin framework for HTTP web services
 	"github.com/google/uuid"   // To generate unique identifiers
@@ -93,9 +94,15 @@ func main() {
 			return
 		}
 
-		// Return the download link in the response
+		// Return the download link and additional file details in the response
 		c.JSON(200, gin.H{
-			"link": link,
+			"id":            id,
+			"file_name":     fileName,
+			"original_name": file.Filename,
+			"file_size":     file.Size,
+			"file_type":     file.Header.Get("Content-Type"),
+			"upload_time":   time.Now(),
+			"link":          link,
 		})
 	})
 
