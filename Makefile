@@ -20,7 +20,7 @@ build:
 # Run the compiled application
 run: build
 	$(EXECUTEABLE_PATH) $(ARGS)
-	
+
 # Start the development server using npm
 dev:
 	npm run dev

@@ -24,8 +24,8 @@ func main() {
 	flag.StringVar(serverPort, "p", "3000", "The port number the server will listen on. Default is 3000.")
 
 	// Flag for setting the server hostname or IP
-	serverHost := flag.String("host", "localhost", "The hostname or IP address of the server. Default is localhost.")
-	flag.StringVar(serverHost, "h", "localhost", "The hostname or IP address of the server. Default is localhost.")
+	serverHost := flag.String("host", "0.0.0.0", "The hostname or IP address of the server. Default is localhost.")
+	flag.StringVar(serverHost, "h", "0.0.0.0", "The hostname or IP address of the server. Default is localhost.")
 
 	// Parse the command-line flags
 	flag.Parse()
