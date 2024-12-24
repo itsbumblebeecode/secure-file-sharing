@@ -1,37 +1,38 @@
-# Stage 1: Builder
-# Use the official Go image as the base image for building the application
+# Use the latest Golang image to build SFS
 FROM golang:latest AS builder
 
-# Set the working directory inside the container for the build process
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the entire source code and Makefile from the host into the container
+# Copy the current directory contents into the container
 COPY . .
 
-# Fetch the Go dependencies and tidy up the module cache to ensure all dependencies are resolved
+# Fetch and tidy up dependencies for SFS
 RUN go mod tidy
 
-# Run `make build` to compile the Go application (Makefile should define the build process)
+# Build the application using a Makefile
 RUN make build
 
-# Stage 2: Runtime (Alpine)
-# Use the lightweight Alpine Linux image as the base for the runtime environment
+# Use the latest Alpine image for a smaller runtime container
 FROM alpine:latest AS runtime
 
-# Install the necessary libraries for the Go binary (e.g., to ensure compatibility with glibc)
-RUN apk add --no-cache libc6-compat
+# Install necessary dependencies for the runtime environment
+RUN apk add --no-cache libc6-compat bash
 
-# Set the working directory inside the container where the final app will run
+# Set the working directory for the runtime container
 WORKDIR /root/
 
-# Copy the compiled Go binary from the builder stage into the runtime image
-COPY --from=builder /app/dist/sfs .
+# Copy the compiled SFS application from the builder container to the runtime container
+COPY --from=builder /app/dist/sfs /root/
 
-# Copy the public directory (which contains static files/templates) from the builder stage into the container
-COPY --from=builder /app/public /root/public
+# Copy the public directory (e.g., static assets) from the builder container to the runtime container
+COPY --from=builder /app/public /root/public/
 
-# Expose the port that the Go application will listen on (adjust if needed)
+# Copy the custom entrypoint script from the builder container to the runtime container
+COPY --from=builder /app/scripts/docker_entrypoint.sh /usr/bin/docker_entrypoint.sh
+
+# Expose port 3000 to the outside world
 EXPOSE 3000
 
-# Set the command to run the Go binary (`sfs`) when the container starts
-CMD ["./sfs"]
+# Set the entrypoint to the bash shell that runs the entrypoint script
+CMD ["/bin/bash", "/usr/bin/docker_entrypoint.sh"]
